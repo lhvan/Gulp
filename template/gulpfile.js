@@ -2,9 +2,11 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
+const autoprefixer = require('gulp-autoprefixer');
 
 const SOURCEPATHS = {
   sassSource: 'src/scss/*.scss',
+  htmlSource: 'src/*.html'
 }
 const APPPATH = {
   root: 'app/',
@@ -14,10 +16,15 @@ const APPPATH = {
 
 gulp.task('sass', () => {
   return gulp.src(SOURCEPATHS.sassSource)
+        .pipe(autoprefixer())
         .pipe(sass({outputStyle: 'expanded'}).on('error',sass.logError))
         .pipe(gulp.dest(APPPATH.css));
 });
 
+gulp.task('copy', () => {
+  gulp.src(SOURCEPATHS.htmlSource)
+      .pipe(gulp.dest(APPPATH.root));
+});
 
 gulp.task('serve', ['sass'], () => {
   browserSync.init([APPPATH.css + '/*.css', APPPATH.root + '/*.html', APPPATH.js + '/*.js'], {
@@ -27,8 +34,9 @@ gulp.task('serve', ['sass'], () => {
   })
 });
 
-gulp.task('watch', ['serve', 'sass'], () => {
+gulp.task('watch', ['serve', 'sass', 'copy'], () => {
   gulp.watch([SOURCEPATHS.sassSource], ['sass']);
+  gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
 });
 
 gulp.task('default',['watch']);

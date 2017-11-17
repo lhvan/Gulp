@@ -9,10 +9,14 @@ const browserify = require('gulp-browserify');
 const merge = require('merge-stream');
 const newer = require('gulp-newer');
 const imagemin = require('gulp-imagemin');
+const injectPartials = require('gulp-inject-partials');
+const minify = require('gulp-minify');
+
 
 const SOURCEPATHS = {
   sassSource: 'src/scss/*.scss',
   htmlSource: 'src/*.html',
+  htmlPartialSource: 'src/partial/*.html',
   jsSource: 'src/js/**',
   imgSource: 'src/img/**'
 }
@@ -60,14 +64,28 @@ gulp.task('scripts',['clean-scripts'], () => {
       .pipe(gulp.dest(APPPATH.js));
 });
 
+gulp.task('compress', () => {
+  gulp.src(SOURCEPATHS.jsSource)
+      .pipe(concat('main.js'))
+      .pipe(browserify())
+      .pipe(minify())
+      .pipe(gulp.dest(APPPATH.js));
+});
+
 gulp.task('moveFonts', () => {
   gulp.src('./node_modules/bootstrap/dist/fonts/*.{eot,svg,woff,woff2}')
       .pipe(gulp.dest(APPPATH.fonts));
 });
 
-gulp.task('copy',['clean-html'], () => {
-  gulp.src(SOURCEPATHS.htmlSource)
-      .pipe(gulp.dest(APPPATH.root));
+// gulp.task('copy',['clean-html'], () => {
+//   gulp.src(SOURCEPATHS.htmlSource)
+//       .pipe(gulp.dest(APPPATH.root));
+// });
+
+gulp.task('html', () => {
+  return gulp.src(SOURCEPATHS.htmlSource)
+            .pipe(injectPartials())
+            .pipe(gulp.dest(APPPATH.root));
 });
 
 
@@ -79,11 +97,12 @@ gulp.task('serve', ['sass'], () => {
   })
 });
 
-gulp.task('watch', ['serve', 'sass', 'scripts', 'copy', 'clean-html', 'clean-scripts', 'moveFonts', 'images'], () => {
+gulp.task('watch', ['serve', 'sass', 'scripts', 'clean-html', 'clean-scripts', 'moveFonts', 'images', 'html', 'compress'], () => {
   gulp.watch([SOURCEPATHS.sassSource], ['sass']);
-  gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
+  // gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
   gulp.watch([SOURCEPATHS.jsSource], ['scripts']);
   gulp.watch([SOURCEPATHS.imgSource], ['images']);
+  gulp.watch([SOURCEPATHS.htmlSource, SOURCEPATHS.htmlPartialSource], ['html']);
 });
 
 gulp.task('default',['watch']);

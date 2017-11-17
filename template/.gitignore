@@ -1,5 +1,0 @@
-node_modules
-app/
-.gitignore
-.DS_Store
-package-lock.json

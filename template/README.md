@@ -1,7 +1,7 @@
 # My workflow with Sass, npm, gulp
 My web template workflow with sass, npm, gulp
 
-#Instructions
+# Instructions
 1.- Clone this repo or download it from this website.
 
 2.- Make sure you have these installed:

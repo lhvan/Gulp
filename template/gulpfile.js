@@ -7,17 +7,21 @@ const clean = require('gulp-clean');
 const concat = require('gulp-concat');
 const browserify = require('gulp-browserify');
 const merge = require('merge-stream');
+const newer = require('gulp-newer');
+const imagemin = require('gulp-imagemin');
 
 const SOURCEPATHS = {
   sassSource: 'src/scss/*.scss',
   htmlSource: 'src/*.html',
-  jsSource: 'src/js/**'
+  jsSource: 'src/js/**',
+  imgSource: 'src/img/**'
 }
 const APPPATH = {
   root: 'app/',
   css: 'app/css',
   js: 'app/js',
-  fonts: 'app/fonts'
+  fonts: 'app/fonts',
+  img: 'app/img'
 }
 
 gulp.task('clean-html', () => {
@@ -40,6 +44,13 @@ gulp.task('sass', () => {
 gulp.task('clean-scripts', () => {
   return gulp.src(APPPATH.js + '/*.js', { read: false, force: true})
             .pipe(clean());
+});
+
+gulp.task('images', () => {
+  return gulp.src(SOURCEPATHS.imgSource)
+            .pipe(newer(APPPATH.img))
+            .pipe(imagemin())
+            .pipe(gulp.dest(APPPATH.img));
 });
 
 gulp.task('scripts',['clean-scripts'], () => {
@@ -68,10 +79,11 @@ gulp.task('serve', ['sass'], () => {
   })
 });
 
-gulp.task('watch', ['serve', 'sass', 'scripts', 'copy', 'clean-html', 'clean-scripts', 'moveFonts'], () => {
+gulp.task('watch', ['serve', 'sass', 'scripts', 'copy', 'clean-html', 'clean-scripts', 'moveFonts', 'images'], () => {
   gulp.watch([SOURCEPATHS.sassSource], ['sass']);
   gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
   gulp.watch([SOURCEPATHS.jsSource], ['scripts']);
+  gulp.watch([SOURCEPATHS.imgSource], ['images']);
 });
 
 gulp.task('default',['watch']);

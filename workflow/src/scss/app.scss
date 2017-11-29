@@ -1,8 +1,4 @@
-$black: #000;
-$red: red;
-body {
-  background: #fff;
-}
-h1 {
-  transition: all .2s;
-}
+@import url(https://fonts.googleapis.com/css?family=Bitter:400,700|Open+Sans);
+@import 'variables';
+@import 'typography';
+@import 'layout';

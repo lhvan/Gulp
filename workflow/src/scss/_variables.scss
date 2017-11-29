@@ -1,0 +1,49 @@
+$white: #ffffff;
+$blue:  #0076a3;
+$dark-blue:  darken($blue,10);
+$yellow: #ffba00;
+$green: #548c27;
+$red: #fe2d28;
+$black: #000000;
+
+$bg-color: $blue;
+$text-color: $black;
+
+$paragraph-font-size: 1.2rem;
+$paragraph-font-family: 'Open Sans', sans-serif;
+
+
+$nav-bg-color: $dark-blue;
+$menu-anchor-font-size: 1.4rem;
+
+$heading-color: $yellow;
+$heading-font-family: 'Bitter', serif;
+$heading-font-weight: 700;
+$heading-font-size: (
+  h1: 40px,
+  h2: 36px,
+  h3: 32px,
+  h4: 28px,
+  h5: 24px,
+  h6: 20px
+);
+
+// visit
+$visit-border-color: $white;
+$visit-heading-color: lighten($yellow, 10);
+$visit-text-color: $white;
+
+// grid & responsive
+$breakpoints: (
+  phone: 480px,
+  tablet: 768px,
+  desktop: 1024px
+);
+$columns: 12;
+$grid-max-width: 1200px;
+
+//buttons
+$button-font-size: 16px;
+
+//footer
+$bg-footer: $dark-blue;

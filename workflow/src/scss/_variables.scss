@@ -16,6 +16,12 @@ $paragraph-font-family: 'Open Sans', sans-serif;
 $nav-bg-color: $dark-blue;
 $menu-anchor-font-size: 1.4rem;
 
+
+//cards
+$card-bg-color: $white;
+$card-text-font-size: 1rem;
+
+//heading
 $heading-color: $yellow;
 $heading-font-family: 'Bitter', serif;
 $heading-font-weight: 700;
@@ -42,8 +48,21 @@ $breakpoints: (
 $columns: 12;
 $grid-max-width: 1200px;
 
+
+
 //buttons
-$button-font-size: 16px;
+$btn-font-size: 16px;
+$btn-font-weight: bold;
 
 //footer
 $bg-footer: $dark-blue;
+
+
+//table
+$table-font-size: 1.2rem;
+$table-caption-font-family: $heading-font-family;
+$table-color: $white;
+$table-hover-bg-color: darken($yellow, 5);
+
+//services
+$paragraph-services-font-size: 1rem;

@@ -38,13 +38,9 @@ gulp.task('clean-html', () => {
 });
 
 gulp.task('sass', () => {
-  const bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
-
   const sassFile = gulp.src(SOURCEPATHS.sassApp)
         .pipe(autoprefixer())
-        .pipe(sass({outputStyle: 'expanded'}).on('error',sass.logError));
-
-  return merge(bootstrapCSS, sassFile)
+        .pipe(sass({outputStyle: 'expanded'}).on('error',sass.logError))
         .pipe(concat('app.css'))
         .pipe(gulp.dest(APPPATH.css));
 });
@@ -78,13 +74,9 @@ gulp.task('compress', () => {
 });
 
 gulp.task('compresscss', () => {
-  const bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
-
   const sassFile = gulp.src(SOURCEPATHS.sassSource)
         .pipe(autoprefixer())
-        .pipe(sass({outputStyle: 'expanded'}).on('error',sass.logError));
-
-  return merge(bootstrapCSS, sassFile)
+        .pipe(sass({outputStyle: 'expanded'}).on('error',sass.logError))
         .pipe(concat('app.css'))
         .pipe(cssmin())
         .pipe(rename({suffix: '.min'}))
@@ -99,10 +91,6 @@ gulp.task('minfyHtml', () => {
 });
 /** End of Production task **/
 
-gulp.task('moveFonts', () => {
-  gulp.src('./node_modules/bootstrap/dist/fonts/*.{eot,svg,woff,woff2}')
-      .pipe(gulp.dest(APPPATH.fonts));
-});
 
 // gulp.task('copy',['clean-html'], () => {
 //   gulp.src(SOURCEPATHS.htmlSource)
@@ -124,7 +112,7 @@ gulp.task('serve', ['sass'], () => {
   })
 });
 
-gulp.task('watch', ['serve', 'sass', 'scripts', 'clean-html', 'clean-scripts', 'moveFonts', 'images', 'html'], () => {
+gulp.task('watch', ['serve', 'sass', 'scripts', 'clean-html', 'clean-scripts', 'images', 'html'], () => {
   gulp.watch([SOURCEPATHS.sassSource], ['sass']);
   // gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
   gulp.watch([SOURCEPATHS.jsSource], ['scripts']);
